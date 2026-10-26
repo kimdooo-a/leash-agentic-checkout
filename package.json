@@ -1,0 +1,16 @@
+{
+  "name": "leash",
+  "version": "0.1.0",
+  "description": "An AI shopping agent that can only spend inside a mandate you set: it builds the cart, PayPal moves the money, you hold the leash.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test \"test/*.test.js\"",
+    "e2e": "node scripts/e2e.mjs",
+    "check:paypal": "node scripts/check-paypal.mjs"
+  }
+}

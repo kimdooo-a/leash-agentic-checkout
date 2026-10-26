@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leash — agentic checkout on a mandate</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo" aria-hidden="true">◉—</span> Leash <small>an AI shopping agent that can only spend inside your mandate</small></div>
+    <div class="badges" id="badges"></div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <main class="grid">
+    <section class="col">
+      <div class="card">
+        <h2>1 · Tell the agent what you need</h2>
+        <form id="ask">
+          <textarea id="message" rows="2" placeholder="e.g. Pasta dinner for 4 under $25" required></textarea>
+          <div class="row">
+            <div class="chips" id="examples">
+              <button type="button" class="chip">Pasta dinner for 4 under $25</button>
+              <button type="button" class="chip">Breakfast for two, no alcohol</button>
+              <button type="button" class="chip">Game night for 6 under $30</button>
+              <button type="button" class="chip">Buy 2 usb-c cables and a $100 gift card</button>
+              <button type="button" class="chip">Refund the parmesan</button>
+            </div>
+            <button class="primary" id="askBtn">Ask agent</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card" id="traceCard" hidden>
+        <h2>2 · What the agent did</h2>
+        <ol class="trace" id="trace"></ol>
+      </div>
+
+      <div class="card" id="cartCard" hidden>
+        <h2>3 · Proposed cart <span class="pill" id="cartStatus"></span></h2>
+        <table class="lines"><thead><tr><th>Item</th><th>Merchant</th><th class="num">Qty</th><th class="num">Price</th></tr></thead><tbody id="lines"></tbody></table>
+        <div class="limit"><div class="bar"><div class="fill" id="limitFill"></div></div><span id="limitText"></span></div>
+        <ul class="violations" id="violations"></ul>
+        <div class="actions" id="cartActions"></div>
+        <p class="hint" id="cartHint"></p>
+      </div>
+    </section>
+
+    <section class="col">
+      <div class="card">
+        <h2>Mandate <small>the leash — enforced in code, not by the model</small></h2>
+        <div class="meter"><div class="bar"><div class="fill spent" id="mSpent"></div><div class="fill held" id="mHeld"></div></div>
+          <div class="meter-legend" id="meterText"></div></div>
+        <form id="mandate" class="mandate">
+          <label>Monthly budget $<input name="monthlyBudgetCents" type="number" min="0" step="1"></label>
+          <label>Per-order cap $<input name="perOrderCapCents" type="number" min="0" step="1"></label>
+          <label>Per-item cap $<input name="perItemCapCents" type="number" min="0" step="1"></label>
+          <label>Max qty / item <input name="maxQtyPerItem" type="number" min="1" step="1"></label>
+          <label>Price drift tolerance % <input name="priceDriftTolerancePct" type="number" min="0" step="0.5"></label>
+          <fieldset><legend>Blocked categories</legend>
+            <label class="inline"><input type="checkbox" name="blocked" value="alcohol"> alcohol</label>
+            <label class="inline"><input type="checkbox" name="blocked" value="gift_card"> gift cards</label>
+            <label class="inline"><input type="checkbox" name="blocked" value="electronics"> electronics</label>
+          </fieldset>
+          <button class="secondary">Save mandate</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Orders</h2>
+        <div id="orders"><p class="hint">No orders yet.</p></div>
+      </div>
+
+      <div class="card">
+        <h2>PayPal API log <small>every call the server made</small></h2>
+        <ul class="log" id="log"></ul>
+        <button class="link" id="reset" type="button">Reset demo data</button>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
